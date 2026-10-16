@@ -129,7 +129,7 @@ async function openProduct(p) {
   $('#sizeTable').innerHTML = p.sizes.map((s) => `<div class="sz ${s[3] ? 'in' : 'out'} ${c && s === c ? 'best' : ''} ${s[1] === my ? 'mine' : ''}"><span>US ${s[1]}</span><b>${money(s[2])}</b></div>`).join('');
 
   sizeChart?.destroy();
-  const cap = prices.length ? prices[Math.floor(prices.length * 0.9)] * 1.4 : undefined;
+  const cap = prices.length ? Math.ceil((prices[Math.floor(prices.length * 0.9)] * 1.4) / 100) * 100 : undefined;
   sizeChart = new Chart($('#sizeChart'), {
     type: 'bar',
     data: { labels: p.sizes.map((s) => s[1]), datasets: [{ data: p.sizes.map((s) => s[2]), backgroundColor: p.sizes.map((s) => (s === c ? '#ff5a1f' : s[3] ? '#22c55e' : '#475066')), borderRadius: 6 }] },
