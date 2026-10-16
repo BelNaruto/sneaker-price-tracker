@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sneaker Price Tracker — price of every size (Jordan, Nike, Yeezy)</title>
+  <meta name="description" content="Open-source sneaker price tracker: search sneakers, see the price of every size, find the cheapest size and track price drops. Powered by the KicksCrew Sneakers Data API." />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">👟 <b>Sneaker</b>Price<span>Tracker</span></div>
+    <form id="searchForm" class="search">
+      <input id="q" placeholder="Search sneakers… e.g. jordan 1, dunk low, yeezy 350" value="jordan 1" />
+      <input id="size" placeholder="My US size" size="8" />
+      <button>Search</button>
+    </form>
+    <nav>
+      <button class="tab active" data-view="results">Results</button>
+      <button class="tab" data-view="watchlist">Watchlist <span id="wlCount" class="pill">0</span></button>
+      <button id="settingsBtn" title="Settings">⚙️</button>
+    </nav>
+  </header>
+
+  <div id="banner" class="banner"></div>
+
+  <main>
+    <section id="results" class="view">
+      <div id="stats" class="stats"></div>
+      <div id="grid" class="grid"></div>
+    </section>
+    <section id="watchlist" class="view hidden">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Watchlist — lowest in-stock price over time</h2>
+          <button id="refreshAll">↻ Take price snapshot</button>
+        </div>
+        <canvas id="historyChart" height="110"></canvas>
+      </div>
+      <div id="wlList" class="wl"></div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="sheet">
+      <button class="close" id="closeModal">✕</button>
+      <div class="detail">
+        <div class="gallery"><img id="mImg" alt="" /><div id="mThumbs" class="thumbs"></div></div>
+        <div class="info">
+          <div class="vendor" id="mVendor"></div>
+          <h2 id="mTitle"></h2>
+          <div class="kpis" id="mKpis"></div>
+          <div class="actions">
+            <button id="trackBtn">⭐ Track price</button>
+            <a id="mLink" target="_blank" rel="noopener">Open on KicksCrew ↗</a>
+          </div>
+        </div>
+      </div>
+      <h3>Price by size <small>(green = in stock, grey = sold out)</small></h3>
+      <canvas id="sizeChart" height="90"></canvas>
+      <div id="sizeTable" class="sizes"></div>
+    </div>
+  </div>
+
+  <div id="settings" class="modal hidden">
+    <div class="sheet small">
+      <button class="close" data-close="settings">✕</button>
+      <h2>Settings</h2>
+      <p>Get a key at <a href="https://rapidapi.com/belchiorarkad-FqvHs2EDOtP/api/kickscrew-sneakers-data" target="_blank">RapidAPI → KicksCrew Sneakers Data</a>. Leave empty to use the built-in demo data.</p>
+      <label>RapidAPI key <input id="apiKey" type="password" placeholder="your RapidAPI key" /></label>
+      <label>…or your own proxy URL <input id="proxyUrl" placeholder="http://localhost:8787" /></label>
+      <p class="hint">The key is stored only in this browser (localStorage). For a public website use <code>server/proxy.js</code> so the key stays on your server.</p>
+      <button id="saveSettings">Save</button>
+    </div>
+  </div>
+
+  <footer>Data: <a href="https://rapidapi.com/belchiorarkad-FqvHs2EDOtP/api/kickscrew-sneakers-data" target="_blank">KicksCrew Sneakers Data API</a> · Support: <a href="https://t.me/pintoflow" target="_blank">Telegram @pintoflow</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
